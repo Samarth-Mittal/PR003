@@ -1,0 +1,8 @@
+language: java
+jdk:
+  - openjdk8
+
+script: ./mvnw clean install
+
+notifications:
+  email: samarth.mittal1301@gmail.com
