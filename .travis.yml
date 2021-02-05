@@ -5,5 +5,9 @@ jdk:
 notifications:
   email: samarth.mittal1301@gmail.com
 
+script:
+  - ./mvnw clean install
+  - "mvn test jacoco:report"
+
 after_success:
   - "mvn clean test jacoco:report coveralls:report"
