@@ -6,10 +6,4 @@ notifications:
   email: samarth.mittal1301@gmail.com
 
 after_success:
-  - "mvn org.jacoco:jacoco-maven-plugin:prepare-agent coveralls:report"
-install:
-  - "mvn test-compile -DskipTests=true -Dmaven.javadoc.skip=true -B -V"
-
-script:
-  - ./mvnw clean install
-  - "mvn test jacoco:report"
+  - "mvn clean test jacoco:report coveralls:report"
