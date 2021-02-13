@@ -11,7 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>Luhn_Algorithm</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>Luhn_Algorithm</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -47,6 +47,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.sentry</groupId>
+			<artifactId>sentry-spring-boot-starter</artifactId>
+			<version>4.0.0</version>
 		</dependency>
 	</dependencies>
 

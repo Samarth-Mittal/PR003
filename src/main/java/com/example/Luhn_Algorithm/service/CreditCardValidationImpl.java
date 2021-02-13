@@ -1,6 +1,7 @@
 package com.example.Luhn_Algorithm.service;
 
 import com.example.Luhn_Algorithm.model.CreditCard;
+import io.sentry.Sentry;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -11,10 +12,12 @@ import java.util.regex.Pattern;
 @Service
 public class CreditCardValidationImpl implements  CreditCardValidation{
 
-    @Override
-    public boolean isCardValid(String cardNo, String name, String CVV, String expiry_month_year) {
+    /*Sentry.init("https://5f67ac2ed8c54587924ca59e51d6c078@o523478.ingest.sentry.io/5635626");*/
 
-        CreditCard creditCard=new CreditCard();
+    @Override
+    public boolean isCardValid(String cardNo, String name, String CVV, String expiry_month_year) throws Exception {
+
+        CreditCard creditCard = new CreditCard();
 
         creditCard.setCardNo(cardNo);
         creditCard.setHolder_name(name);
@@ -22,14 +25,19 @@ public class CreditCardValidationImpl implements  CreditCardValidation{
         creditCard.setExpiry_month(Integer.parseInt(expiry_month_year.split("/")[0]));
         creditCard.setExpiry_year(Integer.parseInt(expiry_month_year.split("/")[1]));
 
-        if(!hasExpiryDatePassed(creditCard.getExpiry_month(), creditCard.getExpiry_year()) &&
-                luhnAlgorithm(creditCard.getCardNo()) &&
-                isNameValid(creditCard.getHolder_name()) &&
-                isCVV_Valid(creditCard.getCVV())){
-            return true;
+        try {
+            if (!hasExpiryDatePassed(creditCard.getExpiry_month(), creditCard.getExpiry_year()) &&
+                    luhnAlgorithm(creditCard.getCardNo()) &&
+                    isNameValid(creditCard.getHolder_name()) &&
+                    isCVV_Valid(creditCard.getCVV())) {
+                return true;
+            } else {
+                throw new Exception("Invalid Card");
+            }
+        }catch (Exception e){
+            Sentry.captureException(e);
+            return false;
         }
-        return false;
-
     }
 
     private boolean luhnAlgorithm(String cardno){

@@ -15,7 +15,7 @@ public class Controller {
 
     @ResponseBody
     @RequestMapping(value = "home", method = RequestMethod.POST)
-    public String home(@RequestParam(value = "cardNo", required = true) String cardNo, @RequestParam(value = "name", required = true) String name, @RequestParam(value = "CVV", required = true) String CVV, @RequestParam(value = "expiry_month_year", required = true) String expiry_month_year) {
+    public String home(@RequestParam(value = "cardNo", required = true) String cardNo, @RequestParam(value = "name", required = true) String name, @RequestParam(value = "CVV", required = true) String CVV, @RequestParam(value = "expiry_month_year", required = true) String expiry_month_year) throws Exception {
         if (creditCardValidation.isCardValid(cardNo, name, CVV, expiry_month_year)) {
             return "Card details are valid.";
         } else {
